@@ -10,13 +10,16 @@ Instruction on Dragging:
 
 
 Instruction on Development:
+
 In order to let the movingItem feature work, you should do 2 things:
 
 * Using UICollectionViewController
+
   It will automatically install UILongPressGestureRecognizer to your cell.contentView.
   In default, UICollectionViewController.installsStandardGestureForInteractiveMovement = true 
 
 * Implement/Override collectionView(_:moveItemAtIndexPath:toIndexPath)
+
   This function is required to implement, in order to get dragItem feature
 
 
