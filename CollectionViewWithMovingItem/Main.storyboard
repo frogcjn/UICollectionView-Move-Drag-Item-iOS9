@@ -55,7 +55,7 @@
                     <navigationItem key="navigationItem" id="0gn-AX-ULF">
                         <barButtonItem key="rightBarButtonItem" title="Item" id="gqD-wC-o1E">
                             <connections>
-                                <action selector="tapButton:" destination="ZUL-za-jPi" id="Ztr-C5-83f"/>
+                                <action selector="tapButtonWithSender:" destination="ZUL-za-jPi" id="XZ2-7X-A0A"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
