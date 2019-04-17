@@ -9,9 +9,9 @@
 import UIKit
 
 class Photo {
-	var imageData: Data
+	var imageName: String
 
-	init(imageData: Data) {
-		self.imageData = imageData
+	init(imageName: String) {
+		self.imageName = imageName
 	}
 }

@@ -15,10 +15,7 @@ class PhotosCC: UICollectionViewController {
 	lazy var dataItems: [Photo] = {
 		var photos = [Photo]()
 		for index in 0...15 {
-			let image = UIImage(named: "\(index)_full")!
-			let imageData = image.jpegData(compressionQuality: 1)!
-			let photo = Photo(imageData: imageData)
-			photos.append(photo)
+			photos.append(Photo(imageName: "\(index)_full"))
 		}
 		return photos
 	}()
@@ -50,7 +47,7 @@ extension PhotosCC {
 		if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? PhotoCell {
 			let item = dataItems[indexPath.row]
 			//cell.textLabel?.text = thing.name
-			cell.imageView.image = UIImage(data: item.imageData)
+			cell.imageView.image = UIImage(named: item.imageName)
 			return cell
 		}
         return UICollectionViewCell()
