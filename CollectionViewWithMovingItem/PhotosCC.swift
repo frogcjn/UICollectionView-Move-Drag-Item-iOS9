@@ -60,8 +60,6 @@ extension PhotosCC {
     
     //must override to get movingItem feature worked
 	override func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-		let sIndex = sourceIndexPath.item
-        let dIndex = destinationIndexPath.item
-		dataItems.swapAt(sIndex, dIndex)
+		dataItems.insert(dataItems.remove(at: sourceIndexPath.row), at: destinationIndexPath.row)
     }
 }
