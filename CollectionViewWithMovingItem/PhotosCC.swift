@@ -17,7 +17,9 @@ class PhotosCC: UICollectionViewController {
     
     @IBAction func tapButton(sender: UIBarButtonItem) {
         print(self.installsStandardGestureForInteractiveMovement)
-        print(collectionView!.cellForItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 0))?.contentView.gestureRecognizers)
+		if let cell = collectionView.cellForItem(at: IndexPath(item: 0, section: 0)) {
+			print(cell.contentView.gestureRecognizers!)
+		}
     }
     
     override func viewDidLoad() {
@@ -30,9 +32,9 @@ class PhotosCC: UICollectionViewController {
     // MARK: - Data
     
     class Photo {
-        var imageData: NSData
+        var imageData: Data
         
-        init(imageData: NSData) {
+        init(imageData: Data) {
             self.imageData = imageData
         }
     }
@@ -41,7 +43,7 @@ class PhotosCC: UICollectionViewController {
         var photos = [] as [Photo]
         for index in 0...15 {
             let image = UIImage(named: "\(index)_full")!
-            let imageData = UIImageJPEGRepresentation(image, 1.0)!
+			let imageData = image.jpegData(compressionQuality: 1)!
             let photo = Photo(imageData: imageData)
             photos.append(photo)
         }
@@ -51,12 +53,12 @@ class PhotosCC: UICollectionViewController {
     // MARK: - Read/Modify Item with Index
     
     func configureCell(cell:UICollectionViewCell?, withIndex index: Int){
-        configureCell(cell, withDataItem: dataItems[index])
+		configureCell(cell: cell, withDataItem: dataItems[index])
     }
     
     func moveDataItem(sIndex: Int, _ dIndex: Int) {
-        let item = dataItems.removeAtIndex(sIndex)
-        dataItems.insert(item, atIndex:dIndex)
+		let item = dataItems.remove(at: sIndex)
+		dataItems.insert(item, at:dIndex)
     }
     
     // MARK: - Configure Cell
@@ -75,24 +77,24 @@ extension PhotosCC /*(UICollectionViewDataSource)*/ {
     
     // MARK: - Index Transfer
 
-    func indexOf(indexPath:NSIndexPath) -> Int{
+    func indexOf(indexPath: IndexPath) -> Int{
         return indexPath.item
     }
-    func indexPathOf(index:Int) -> NSIndexPath{
-        return NSIndexPath(forItem: index, inSection: 0)
+    func indexPathOf(index:Int) -> IndexPath{
+        return IndexPath(item: index, section: 0)
     }
 
     // MARK: UICollectionViewDataSource
 
-    override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+	override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return dataItems.count
     }
 
-    override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath)
-        let index = indexOf(indexPath)
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
+        let index = indexOf(indexPath: indexPath)
 
-        configureCell(cell, withIndex: index)
+		configureCell(cell: cell, withIndex: index)
         return cell
     }
     
@@ -102,11 +104,12 @@ extension PhotosCC /*(UICollectionViewDataSource)*/ {
     }*/
     
     //must override to get movingItem feature worked
-    override func collectionView(collectionView: UICollectionView, moveItemAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath) {
-        let sIndex = indexOf(sourceIndexPath)
-        let dIndex = indexOf(destinationIndexPath)
+	
+	override func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+		let sIndex = indexOf(indexPath: sourceIndexPath)
+        let dIndex = indexOf(indexPath: destinationIndexPath)
         
-        moveDataItem(sIndex, dIndex)
+		moveDataItem(sIndex: sIndex, dIndex)
     }
 }
 
